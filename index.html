@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سارا و آرمین | دعوت عروسی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#FBF6EC;
+    --card:#FFFDF8;
+    --ink:#2B3524;
+    --ink-soft:#4a5540;
+    --gold:#B8935A;
+    --gold-deep:#8C6A3F;
+    --gold-pale:#E7D6B4;
+    --line: rgba(140,106,63,0.35);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Vazirmatn', sans-serif;
+    overflow-x:hidden;
+    position:relative;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(184,147,90,0.06) 0%, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(184,147,90,0.08) 0%, transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .display{font-family:'Aref Ruqaa', serif;}
+
+  /* petals */
+  .petal{
+    position:fixed; top:-5%; font-size:18px; color:var(--gold);
+    opacity:0.5; pointer-events:none; z-index:5;
+    animation: fall linear infinite;
+  }
+  @keyframes fall{
+    0%{transform:translateY(0) translateX(0) rotate(0deg); opacity:0;}
+    10%{opacity:0.55;}
+    90%{opacity:0.4;}
+    100%{transform:translateY(110vh) translateX(30px) rotate(200deg); opacity:0;}
+  }
+
+  section{
+    position:relative; z-index:1;
+    max-width:640px; margin:0 auto;
+    padding:90px 28px;
+  }
+
+  /* ornament divider */
+  .ornament{
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    margin:26px auto; color:var(--gold-deep);
+  }
+  .ornament .line{ width:52px; height:1px; background:linear-gradient(to var(--dir,left), transparent, var(--gold)); }
+  .ornament svg{ width:20px; height:20px; }
+
+  /* HERO */
+  .hero{
+    min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:60px 24px; position:relative;
+  }
+  .hero-frame{
+    border:1px solid var(--line);
+    padding:56px 30px;
+    position:relative;
+    max-width:480px;
+  }
+  .hero-frame::before, .hero-frame::after{
+    content:""; position:absolute; width:26px; height:26px;
+    border:1px solid var(--gold);
+  }
+  .hero-frame::before{ top:-10px; right:-10px; border-left:none; border-bottom:none; }
+  .hero-frame::after{ bottom:-10px; left:-10px; border-right:none; border-top:none; }
+
+  .eyebrow{
+    letter-spacing:4px; font-size:12px; color:var(--gold-deep);
+    text-transform:uppercase; font-weight:600; opacity:0;
+    animation: riseIn 1s ease forwards 0.2s;
+  }
+  .names{
+    font-family:'Aref Ruqaa', serif;
+    font-size:clamp(46px, 11vw, 68px);
+    line-height:1.25;
+    margin:18px 0 8px;
+    color:var(--ink);
+    opacity:0;
+    animation: riseIn 1.1s ease forwards 0.5s;
+  }
+  .amp{
+    display:block; font-size:0.45em; color:var(--gold); margin:4px 0;
+  }
+  .hero-sub{
+    font-size:16px; color:var(--ink-soft); font-weight:400;
+    opacity:0; animation: riseIn 1s ease forwards 0.9s;
+  }
+  .hero-date{
+    margin-top:22px; font-size:15px; letter-spacing:1px; color:var(--gold-deep);
+    font-weight:600; opacity:0; animation: riseIn 1s ease forwards 1.2s;
+  }
+  @keyframes riseIn{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .scroll-hint{
+    position:absolute; bottom:26px; font-size:11px; letter-spacing:2px; color:var(--gold-deep);
+    opacity:0.7;
+  }
+  .scroll-hint span{ display:block; margin-top:6px; animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);} }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  .section-title{
+    font-family:'Aref Ruqaa', serif;
+    font-size:34px; text-align:center; margin-bottom:6px; color:var(--ink);
+  }
+  .section-kicker{
+    text-align:center; font-size:12px; letter-spacing:3px; color:var(--gold-deep);
+    text-transform:uppercase; margin-bottom:4px;
+  }
+  .section-lead{
+    text-align:center; color:var(--ink-soft); font-size:15.5px; line-height:2; margin-top:22px;
+  }
+
+  /* countdown */
+  .countdown{ display:flex; justify-content:center; gap:14px; margin-top:36px; flex-wrap:wrap; }
+  .count-box{
+    background:var(--card); border:1px solid var(--line); border-radius:2px;
+    padding:16px 14px; min-width:78px; text-align:center;
+    box-shadow:0 10px 24px -14px rgba(140,106,63,0.35);
+  }
+  .count-num{ font-family:'Aref Ruqaa', serif; font-size:30px; color:var(--gold-deep); }
+  .count-label{ font-size:11px; color:var(--ink-soft); margin-top:4px; letter-spacing:1px; }
+
+  /* story */
+  .story-card{
+    margin-top:30px; background:var(--card); border:1px solid var(--line);
+    padding:34px 28px; text-align:center; position:relative;
+  }
+  .story-card p{ color:var(--ink-soft); line-height:2; font-size:15.5px; }
+
+  /* details */
+  .detail-grid{ display:flex; flex-direction:column; gap:20px; margin-top:34px; }
+  .detail-card{
+    background:var(--card); border:1px solid var(--line); padding:26px 24px;
+    text-align:center; position:relative;
+  }
+  .detail-card .icon{ font-size:22px; color:var(--gold); margin-bottom:10px; }
+  .detail-card h3{ font-family:'Aref Ruqaa', serif; font-size:22px; margin-bottom:6px; }
+  .detail-card .time{ color:var(--gold-deep); font-weight:600; font-size:14px; margin-bottom:8px; }
+  .detail-card .addr{ color:var(--ink-soft); font-size:14px; line-height:1.9; margin-bottom:14px; }
+  .map-link{
+    display:inline-block; font-size:13px; color:var(--gold-deep); text-decoration:none;
+    border-bottom:1px solid var(--gold-deep); padding-bottom:2px; letter-spacing:0.5px;
+  }
+
+  /* gallery */
+  .gallery{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:34px;
+  }
+  .gallery .g-item{
+    aspect-ratio:1/1.15; background:linear-gradient(160deg, #F1E6CE, #E9D9B4);
+    border:1px solid var(--line);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    color:var(--gold-deep); gap:8px; font-size:12px; letter-spacing:1px;
+  }
+  .gallery .g-item:nth-child(3){ grid-column: span 2; aspect-ratio:2/1.1; }
+  .gallery .g-item svg{ width:26px; height:26px; opacity:0.8; }
+
+  /* RSVP */
+  .rsvp-card{
+    margin-top:30px; background:var(--card); border:1px solid var(--line);
+    padding:34px 26px;
+  }
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-size:13px; color:var(--ink-soft); margin-bottom:8px; letter-spacing:0.5px; }
+  .field input, .field select{
+    width:100%; background:transparent; border:none; border-bottom:1px solid var(--line);
+    padding:10px 2px; font-family:'Vazirmatn'; font-size:15px; color:var(--ink); outline:none;
+    transition:border-color 0.3s;
+  }
+  .field input:focus, .field select:focus{ border-color:var(--gold); }
+  .attend-toggle{ display:flex; gap:10px; }
+  .attend-btn{
+    flex:1; padding:12px; text-align:center; border:1px solid var(--line); cursor:pointer;
+    font-size:14px; color:var(--ink-soft); transition:all 0.25s; background:transparent;
+    font-family:'Vazirmatn';
+  }
+  .attend-btn.active{ background:var(--gold); color:#fff; border-color:var(--gold); }
+  .submit-btn{
+    width:100%; margin-top:8px; padding:15px; background:var(--ink); color:var(--ivory);
+    border:none; letter-spacing:1px; font-size:14px; cursor:pointer; font-family:'Vazirmatn';
+    transition:background 0.3s;
+  }
+  .submit-btn:hover{ background:var(--gold-deep); }
+  .thanks{
+    display:none; text-align:center; padding:20px 0; color:var(--gold-deep);
+    font-family:'Aref Ruqaa', serif; font-size:22px;
+  }
+
+  /* footer */
+  footer{
+    text-align:center; padding:70px 24px 50px; position:relative; z-index:1;
+  }
+  footer .fname{ font-family:'Aref Ruqaa', serif; font-size:24px; color:var(--ink); }
+  footer p{ margin-top:10px; color:var(--ink-soft); font-size:13px; }
+
+  /* music toggle */
+  .music-btn{
+    position:fixed; bottom:22px; left:22px; z-index:20;
+    width:48px; height:48px; border-radius:50%; background:var(--card);
+    border:1px solid var(--gold); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow:0 8px 20px -8px rgba(140,106,63,0.5);
+  }
+  .music-btn svg{ width:20px; height:20px; color:var(--gold-deep); }
+  .music-btn.playing svg{ animation: spin 3s linear infinite; }
+  @keyframes spin{ from{transform:rotate(0);} to{transform:rotate(360deg);} }
+
+  @media (min-width:600px){
+    .gallery{ grid-template-columns:repeat(3,1fr); }
+    .gallery .g-item:nth-child(3){ grid-column:span 1; aspect-ratio:1/1.15; }
+    .detail-grid{ flex-direction:row; }
+    .detail-card{ flex:1; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .petal, .names, .eyebrow, .hero-sub, .hero-date, .scroll-hint span{ animation:none !important; opacity:1 !important; transform:none !important; }
+    .reveal{ transition:none; opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="petals"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-frame">
+    <div class="eyebrow">با یاری خداوند مهربان</div>
+    <h1 class="names">
+      سارا
+      <span class="amp">&#10023;</span>
+      آرمین
+    </h1>
+    <p class="hero-sub">شما را با آغوشی گرم به جشن پیوندمان دعوت می‌کنیم</p>
+    <div class="hero-date">۱۴ مهرماه ۱۴۰۴ &nbsp;•&nbsp; باغ تالار سرو</div>
+  </div>
+  <div class="scroll-hint">پایین بروید<span>↓</span></div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="reveal">
+  <div class="section-kicker">تا آن روز</div>
+  <h2 class="section-title">چند روز مانده</h2>
+  <div class="ornament"><div class="line"></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 3c2 3 3 5 3 7a3 3 0 1 1-6 0c0-2 1-4 3-7Z"/><path d="M12 14v7M8 21h8"/></svg><div class="line" style="--dir:right;"></div></div>
+  <div class="countdown">
+    <div class="count-box"><div class="count-num" id="cd-days">--</div><div class="count-label">روز</div></div>
+    <div class="count-box"><div class="count-num" id="cd-hours">--</div><div class="count-label">ساعت</div></div>
+    <div class="count-box"><div class="count-num" id="cd-min">--</div><div class="count-label">دقیقه</div></div>
+    <div class="count-box"><div class="count-num" id="cd-sec">--</div><div class="count-label">ثانیه</div></div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="reveal">
+  <div class="section-kicker">داستان ما</div>
+  <h2 class="section-title">از آشنایی تا امروز</h2>
+  <div class="story-card">
+    <p>
+      این بخش را با خاطره‌ی خودتان جایگزین کنید؛ روایت کوتاهی از اولین دیدار، لحظه‌ی خواستگاری
+      یا حسی که این مسیر را برایتان خاص کرده است. چند جمله‌ی صمیمی کافی‌ست تا مهمانان
+      را با داستان شما همراه کند.
+    </p>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section class="reveal">
+  <div class="section-kicker">برنامه مراسم</div>
+  <h2 class="section-title">زمان و مکان</h2>
+  <div class="detail-grid">
+    <div class="detail-card">
+      <div class="icon">&#10023;</div>
+      <h3>عقد و پذیرایی</h3>
+      <div class="time">ساعت ۱۸:۰۰</div>
+      <div class="addr">تهران، خیابان ولیعصر<br>باغ تالار سرو، سالن یاس</div>
+      <a class="map-link" href="https://maps.google.com" target="_blank" rel="noopener">نمایش روی نقشه</a>
+    </div>
+    <div class="detail-card">
+      <div class="icon">&#10023;</div>
+      <h3>جشن شام</h3>
+      <div class="time">ساعت ۲۱:۰۰</div>
+      <div class="addr">همان مکان مراسم عقد<br>سالن اصلی باغ</div>
+      <a class="map-link" href="https://maps.google.com" target="_blank" rel="noopener">نمایش روی نقشه</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="reveal">
+  <div class="section-kicker">یادگاری‌ها</div>
+  <h2 class="section-title">گالری تصاویر</h2>
+  <div class="gallery">
+    <div class="g-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="3.2"/><path d="M8 5l1.5-2h5L16 5"/></svg>عکس ۱</div>
+    <div class="g-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="3.2"/><path d="M8 5l1.5-2h5L16 5"/></svg>عکس ۲</div>
+    <div class="g-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="3.2"/><path d="M8 5l1.5-2h5L16 5"/></svg>عکس اصلی</div>
+    <div class="g-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="3.2"/><path d="M8 5l1.5-2h5L16 5"/></svg>عکس ۴</div>
+    <div class="g-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="3.2"/><path d="M8 5l1.5-2h5L16 5"/></svg>عکس ۵</div>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section class="reveal">
+  <div class="section-kicker">تایید حضور</div>
+  <h2 class="section-title">افتخار حضورتان</h2>
+  <p class="section-lead">لطفاً تا تاریخ ۱ مهرماه پاسخ خود را اعلام بفرمایید</p>
+  <div class="rsvp-card">
+    <form id="rsvpForm">
+      <div class="field">
+        <label>نام و نام خانوادگی</label>
+        <input type="text" required placeholder="نام شما">
+      </div>
+      <div class="field">
+        <label>تعداد همراهان</label>
+        <input type="number" min="0" value="0">
+      </div>
+      <div class="field">
+        <label>آیا در مراسم حضور خواهید داشت؟</label>
+        <div class="attend-toggle">
+          <button type="button" class="attend-btn active" data-val="yes">بله، حتماً</button>
+          <button type="button" class="attend-btn" data-val="no">متأسفانه خیر</button>
+        </div>
+      </div>
+      <button type="submit" class="submit-btn">ارسال پاسخ</button>
+    </form>
+    <div class="thanks" id="thanksMsg">سپاسگزاریم! پاسخ شما ثبت شد 🤍</div>
+  </div>
+</section>
+
+<footer>
+  <div class="fname">سارا &amp; آرمین</div>
+  <p>با عشق، منتظر دیدارتان در این روز خاص هستیم</p>
+</footer>
+
+<div class="music-btn" id="musicBtn" title="پخش آهنگ">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+</div>
+
+<script>
+  // falling petals
+  const petalHost = document.getElementById('petals');
+  const petalChars = ['❀','✿','❁'];
+  for(let i=0;i<14;i++){
+    const p = document.createElement('div');
+    p.className='petal';
+    p.textContent = petalChars[Math.floor(Math.random()*petalChars.length)];
+    p.style.left = Math.random()*100+'vw';
+    p.style.fontSize = (10+Math.random()*14)+'px';
+    p.style.animationDuration = (10+Math.random()*10)+'s';
+    p.style.animationDelay = (Math.random()*10)+'s';
+    petalHost.appendChild(p);
+  }
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  // countdown — set your wedding date/time here (YYYY-MM-DDTHH:MM:SS)
+  const weddingDate = new Date('2025-10-06T18:00:00').getTime();
+  function toFa(n){ return n.toLocaleString('fa-IR'); }
+  function updateCountdown(){
+    const now = Date.now();
+    const diff = weddingDate - now;
+    if(diff <= 0){
+      document.getElementById('cd-days').textContent='۰';
+      document.getElementById('cd-hours').textContent='۰';
+      document.getElementById('cd-min').textContent='۰';
+      document.getElementById('cd-sec').textContent='۰';
+      return;
+    }
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff/(1000*60*60))%24);
+    const m = Math.floor((diff/(1000*60))%60);
+    const s = Math.floor((diff/1000)%60);
+    document.getElementById('cd-days').textContent = toFa(d);
+    document.getElementById('cd-hours').textContent = toFa(h);
+    document.getElementById('cd-min').textContent = toFa(m);
+    document.getElementById('cd-sec').textContent = toFa(s);
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // attend toggle
+  document.querySelectorAll('.attend-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.attend-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // rsvp submit
+  document.getElementById('rsvpForm').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    document.getElementById('rsvpForm').style.display='none';
+    document.getElementById('thanksMsg').style.display='block';
+  });
+
+  // music toggle (visual only — attach your own audio source)
+  const musicBtn = document.getElementById('musicBtn');
+  let playing = false;
+  musicBtn.addEventListener('click', ()=>{
+    playing = !playing;
+    musicBtn.classList.toggle('playing', playing);
+  });
+</script>
+
+</body>
+</html>
